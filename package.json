@@ -1,5 +1,5 @@
 {
-  "name": "express-rest-app",
+  "name": "express-socket-auth-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
