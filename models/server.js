@@ -4,11 +4,16 @@ const fileUpload = require("express-fileupload");
 require("dotenv").config();
 
 const { dbConnection } = require("../db/config");
+const { socketController } = require("../sockets/sockets.controller");
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+
+    /* Socket */
+    this.server = require("http").createServer(this.app);
+    this.io = require("socket.io")(this.server);
 
     // DB Connection
     this.dbConnections();
@@ -28,6 +33,8 @@ class Server {
 
     // Routes
     this.routes();
+
+    this.socket();
   }
 
   async dbConnections() {
@@ -63,8 +70,12 @@ class Server {
     this.app.use(this.paths.search, require("../routes/search.route"));
   }
 
+  socket() {
+    this.io.on("connection", socketController);
+  }
+
   listen() {
-    this.app.listen(this.port, () => {
+    this.server.listen(this.port, () => {
       console.log(`App listening at:`);
       console.log(`http://localhost:${this.port}`);
     });
