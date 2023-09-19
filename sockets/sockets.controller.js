@@ -1,6 +1,4 @@
-const socketController = (socket) => {
-  console.log("Cllient Conected", socket.id);
-};
+const socketController = (socket) => {};
 
 module.exports = {
   socketController,
