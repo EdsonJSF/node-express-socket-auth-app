@@ -96,7 +96,19 @@ const authGoogle = async (req, res = response) => {
   }
 };
 
+const generateNewToken = async (req, res = response) => {
+  const { getUser } = req;
+
+  const token = await generateJWT(getUser.id);
+
+  res.json({
+    msg: "Login ok",
+    data: { user: getUser, token },
+  });
+};
+
 module.exports = {
   authLogin,
   authGoogle,
+  generateNewToken,
 };
