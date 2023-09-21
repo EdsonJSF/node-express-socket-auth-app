@@ -24,9 +24,22 @@ const validJWT = async () => {
     const { data } = await resp.json();
     localStorage.setItem("token", data.token);
     user = data.user;
+    document.title = user.name;
+
+    await connectSocket();
   } catch {
     redirect();
   }
+};
+
+const connectSocket = async () => {
+  const socketChat = io({
+    extraHeaders: {
+      authorization: localStorage.getItem("token"),
+    },
+  });
+
+  socketChat.on("connect", () => {});
 };
 
 const main = async () => {
@@ -34,7 +47,3 @@ const main = async () => {
 };
 
 main();
-
-const socketChat = io();
-
-socketChat.on("connect", () => {});
