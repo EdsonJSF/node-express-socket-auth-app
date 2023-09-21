@@ -2,6 +2,10 @@ const url = "http://localhost:8000/api/auth";
 
 const form = document.querySelector("form");
 
+const redirect = () => {
+  window.location = "chat.html";
+};
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = {};
@@ -20,6 +24,7 @@ form.addEventListener("submit", (event) => {
     .then((resp) => resp.json())
     .then(({ data }) => {
       localStorage.setItem("token", data.token);
+      redirect();
     })
     .catch(console.warn);
 });
@@ -37,6 +42,7 @@ function handleCredentialResponse(response) {
     .then(({ data }) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("email", data.user.email);
+      redirect();
     })
     .catch(console.warn);
 }
