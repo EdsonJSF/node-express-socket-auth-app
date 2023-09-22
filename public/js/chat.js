@@ -1,7 +1,14 @@
 const url = "http://localhost:8000/api";
 
 let user = null;
-let socket = null;
+let socketChat = null;
+
+/* HTML Ref */
+const txtUid = document.querySelector("#txtUid");
+const txtMsg = document.querySelector("#txtMsg");
+const ulUsers = document.querySelector("#ulUsers");
+const ulMsg = document.querySelector("#ulMsg");
+const singoutBtn = document.querySelector("#singoutBtn");
 
 const redirect = () => {
   localStorage.clear();
@@ -33,13 +40,27 @@ const validJWT = async () => {
 };
 
 const connectSocket = async () => {
-  const socketChat = io({
+  socketChat = io({
     extraHeaders: {
       authorization: localStorage.getItem("token"),
     },
   });
 
   socketChat.on("connect", () => {});
+
+  socketChat.on("disconnect", () => {});
+
+  socketChat.on("send-msg", () => {
+    // TODO
+  });
+
+  socketChat.on("users", () => {
+    // TODO
+  });
+
+  socketChat.on("get-msg", () => {
+    // TODO
+  });
 };
 
 const main = async () => {

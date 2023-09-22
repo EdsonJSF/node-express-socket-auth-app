@@ -16,10 +16,46 @@
   <body class="container">
     <main class="row mt-5 gap-4 gap-sm-0">
       <header class="col-sm-6">
-        <h1>Chat</h1>
+        <h1>MSG</h1>
         <hr />
         <br />
+
+        <input
+          type="text"
+          id="txtUid"
+          class="form-control mb-2"
+          placeholder="uid"
+          autocomplete="off"
+        />
+
+        <input
+          type="text"
+          id="txtMsg"
+          class="form-control mb-2"
+          placeholder="msg"
+          autocomplete="off"
+        />
       </header>
+
+      <section class="col-sm-6">
+        <h1>Users</h1>
+        <hr />
+        <br />
+
+        <ul id="ulUsers"></ul>
+      </section>
+
+      <section class="col-sm-6 mt-sm-4">
+        <h3>Chat</h3>
+        <hr />
+        <br />
+
+        <ul id="ulMsg"></ul>
+      </section>
+
+      <div class="col-12 mt-sm-4">
+        <button id="singoutBtn" class="btn btn-outline-info">Singout</button>
+      </div>
     </main>
 
     <script src="./socket.io/socket.io.js"></script>
