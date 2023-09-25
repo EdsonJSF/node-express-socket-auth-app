@@ -1,11 +1,21 @@
 const { validJWT } = require("../helpers");
+const { ChatMsg } = require("../models");
 
-const socketController = async (socket) => {
+const chatMsg = new ChatMsg();
+
+const socketController = async (socket, io) => {
   const token = socket.handshake.headers.authorization;
   const user = await validJWT(token);
   if (!user) return socket.disconnect();
 
-  console.log("Se conecto", user.name);
+  // Add user
+  chatMsg.connectUser(user);
+  io.emit("users", chatMsg.usersArr);
+
+  socket.on("disconnect", () => {
+    chatMsg.disconnect(user.id);
+    io.emit("users", chatMsg.usersArr);
+  });
 };
 
 module.exports = {

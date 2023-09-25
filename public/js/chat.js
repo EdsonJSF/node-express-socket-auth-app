@@ -54,8 +54,8 @@ const connectSocket = async () => {
     // TODO
   });
 
-  socketChat.on("users", () => {
-    // TODO
+  socketChat.on("users", (payload) => {
+    console.log(payload);
   });
 
   socketChat.on("get-msg", () => {
