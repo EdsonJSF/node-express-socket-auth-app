@@ -54,13 +54,28 @@ const connectSocket = async () => {
     // TODO
   });
 
-  socketChat.on("users", (payload) => {
-    console.log(payload);
-  });
+  socketChat.on("users", drawUsers);
 
   socketChat.on("get-msg", () => {
     // TODO
   });
+};
+
+const drawUsers = (users = []) => {
+  let usersHTML = "";
+  users.forEach(({ uid, name }) => {
+    /* html */
+    usersHTML += `
+      <li>
+        <p>
+          <h5 class="text-success">${name}</h5>
+          <span class="fs-6 text-muted">${uid}</span>
+        </p>
+      </li>
+    `;
+  });
+
+  ulUsers.innerHTML = usersHTML;
 };
 
 const main = async () => {
