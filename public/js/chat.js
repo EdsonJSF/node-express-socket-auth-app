@@ -50,13 +50,13 @@ const connectSocket = async () => {
 
   socketChat.on("disconnect", () => {});
 
-  socketChat.on("send-msg", () => {
-    // TODO
-  });
-
   socketChat.on("users", drawUsers);
 
-  socketChat.on("get-msg", () => {
+  socketChat.on("get-mesages", (payload) => {
+    console.log(payload);
+  });
+
+  socketChat.on("private-mesages", () => {
     // TODO
   });
 };
@@ -77,6 +77,19 @@ const drawUsers = (users = []) => {
 
   ulUsers.innerHTML = usersHTML;
 };
+
+txtMsg.addEventListener("keyup", ({ keyCode }) => {
+  const msg = txtMsg.value;
+  const uid = txtUid.value;
+
+  if (keyCode !== 13) return;
+  if (msg.trim().length === 0) return;
+  if (uid.trim().length === 0) return;
+
+  socketChat.emit("send-msg", { msg, uid });
+
+  txtMsg.value = "";
+});
 
 const main = async () => {
   await validJWT();
