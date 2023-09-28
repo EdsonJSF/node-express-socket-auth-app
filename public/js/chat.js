@@ -77,7 +77,6 @@ const drawUsers = (users = []) => {
 };
 
 const drawMessages = (messages = []) => {
-  console.log(messages);
   let messagesHTML = "";
   messages.forEach(({ name, msg }) => {
     /* html */
@@ -100,7 +99,6 @@ txtMsg.addEventListener("keyup", ({ keyCode }) => {
 
   if (keyCode !== 13) return;
   if (msg.trim().length === 0) return;
-  if (uid.trim().length === 0) return;
 
   socketChat.emit("send-msg", { msg, uid });
 
