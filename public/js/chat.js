@@ -52,9 +52,7 @@ const connectSocket = async () => {
 
   socketChat.on("users", drawUsers);
 
-  socketChat.on("get-mesages", (payload) => {
-    console.log(payload);
-  });
+  socketChat.on("get-mesages", drawMessages);
 
   socketChat.on("private-mesages", () => {
     // TODO
@@ -76,6 +74,24 @@ const drawUsers = (users = []) => {
   });
 
   ulUsers.innerHTML = usersHTML;
+};
+
+const drawMessages = (messages = []) => {
+  console.log(messages);
+  let messagesHTML = "";
+  messages.forEach(({ name, msg }) => {
+    /* html */
+    messagesHTML += `
+      <li>
+        <p>
+          <span class="text-primary">${name}</span>
+          <span >${msg}</span>
+        </p>
+      </li>
+    `;
+  });
+
+  ulMsg.innerHTML = messagesHTML;
 };
 
 txtMsg.addEventListener("keyup", ({ keyCode }) => {

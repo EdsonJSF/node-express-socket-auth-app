@@ -11,14 +11,15 @@ const socketController = async (socket, io) => {
   // Add user
   chatMsg.connectUser(user);
   io.emit("users", chatMsg.usersArr);
+  socket.emit("get-mesages", chatMsg.last10);
 
   socket.on("disconnect", () => {
     chatMsg.disconnect(user.id);
     io.emit("users", chatMsg.usersArr);
   });
 
-  socket.on("send-msg", ({ msg, uid }) => {
-    chatMsg.sendMsg(user.id, user.name);
+  socket.on("send-msg", ({ msg }) => {
+    chatMsg.sendMsg(user.id, user.name, msg);
     io.emit("get-mesages", chatMsg.last10);
   });
 };
