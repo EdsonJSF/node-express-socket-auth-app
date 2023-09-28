@@ -54,8 +54,8 @@ const connectSocket = async () => {
 
   socketChat.on("get-mesages", drawMessages);
 
-  socketChat.on("private-mesages", () => {
-    // TODO
+  socketChat.on("private-mesages", (payload) => {
+    console.log("private", payload);
   });
 };
 

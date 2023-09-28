@@ -8,6 +8,8 @@ const socketController = async (socket, io) => {
   const user = await validJWT(token);
   if (!user) return socket.disconnect();
 
+  socket.join(user.id);
+
   // Add user
   chatMsg.connectUser(user);
   io.emit("users", chatMsg.usersArr);
@@ -18,9 +20,13 @@ const socketController = async (socket, io) => {
     io.emit("users", chatMsg.usersArr);
   });
 
-  socket.on("send-msg", ({ msg }) => {
-    chatMsg.sendMsg(user.id, user.name, msg);
-    io.emit("get-mesages", chatMsg.last10);
+  socket.on("send-msg", ({ uid, msg }) => {
+    if (uid) {
+      socket.to(uid).emit("private-mesages", { user: user.name, msg });
+    } else {
+      chatMsg.sendMsg(user.id, user.name, msg);
+      io.emit("get-mesages", chatMsg.last10);
+    }
   });
 };
 
